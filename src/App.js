@@ -11,16 +11,18 @@ function App() {
     setIsLoadding(true);
     const response = await fetch("https://skill-http-default-rtdb.firebaseio.com/movies.json");
     const data = await response.json();
-
-    const transformData = data.results.map((moviesData) => {
-      return {
-        id: moviesData.episode_id,
-        title: moviesData.title,
-        openingText: moviesData.opening_crawl,
-        releaseData: moviesData.release_date,
-      };
-    });
-    setMovies(transformData);
+    const loadedData = [];
+    for(const key in data){
+      loadedData.push( {
+        id: key,
+        title: data[key].title,
+        openingText: data[key].openingText,
+        releaseData: data[key].releaseData,
+      })
+    }
+    
+    
+    setMovies(loadedData);
     setIsLoadding(false);
   }, []);
 
